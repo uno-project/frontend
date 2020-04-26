@@ -1,1 +1,3 @@
-# frontend
+# Uno frontend
+
+Built in ReactJS
