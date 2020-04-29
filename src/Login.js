@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./Login.css";
 
-const API = "https://uno-dos-tres.herokuapp.com/"
-//const API = "http://localhost:8080/";
+//const API = "https://uno-dos-tres.herokuapp.com/";
+const API = "http://localhost:8080/";
 
 export default function Login() {
   const [username, setEmail] = useState("");
@@ -14,23 +14,24 @@ export default function Login() {
 
   function handleSubmit(event) {
     event.preventDefault();
+    createAndLoginUser(username);
+  }
 
+  function createAndLoginUser(username){
     // create user on api
-    var data = {"name": username};
-    fetch(API + "player", {
+    fetch(API + 'player', {
       method: 'POST',
       mode: 'cors',
       cache: 'no-cache',
       credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      referrerPolicy: 'no-referrer',
-      body: JSON.stringify(data)
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({'name': username})
     })
-    //.then(response => response.json())
-    .then(response => {
-      console.log('Success:', response);
+    .then(response => response.json())
+    .then(data => {
+      // TODO: save on web workers
+      console.log(data);
+      document.cookie = "Autorization=Bearer "+data["access_token"];
     })
     .catch((error) => {
       console.error('Error:', error);
