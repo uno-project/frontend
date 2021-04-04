@@ -11,7 +11,7 @@
     "react-bootstrap": "^0.32.4",
     "react-dom": "^16.13.1",
     "react-native-login-screen": "^0.3.7",
-    "react-scripts": "3.4.1",
+    "react-scripts": "^4.0.3",
     "universal-cookie": "^4.0.3"
   },
   "scripts": {
