@@ -31,11 +31,13 @@ export default function Login() {
     .then(data => {
       // TODO: save on web workers
       console.log(data);
-      document.cookie = "Autorization=Bearer "+data["access_token"];
+      document.cookie = "access_token="+data["access_token"]+"; path=/";
     })
     .catch((error) => {
       console.error('Error:', error);
     });
+
+    // redirect to game
   }
 
   return (
