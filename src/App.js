@@ -40,7 +40,7 @@ class App extends Component {
             <div>
                 <h3>Welcome {token.username}</h3>
                 <h3>Id: {token.jti}</h3>
-                <Button block bsSize="large" type="submit" onClick={this.newGame}>New Game</Button>
+                <Button block bssize="large" type="submit" onClick={this.newGame}>New Game</Button>
             </div>
         )
     }
