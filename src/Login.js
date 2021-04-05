@@ -2,9 +2,6 @@ import React, { useState } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./Login.css";
 
-//const API = "https://uno-dos-tres.herokuapp.com/";
-const API = "http://localhost:8080/";
-
 export default function Login() {
   const [username, setEmail] = useState("");
 
@@ -17,27 +14,25 @@ export default function Login() {
     createAndLoginUser(username);
   }
 
-  function createAndLoginUser(username){
+  function createAndLoginUser(username) {
     // create user on api
-    fetch(API + 'player', {
+    fetch(process.env.REACT_APP_SERVER + 'player', {
       method: 'POST',
       mode: 'cors',
       cache: 'no-cache',
       credentials: 'same-origin',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({'name': username})
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 'name': username })
     })
-    .then(response => response.json())
-    .then(data => {
-      // TODO: save on web workers
-      console.log(data);
-      document.cookie = "access_token="+data["access_token"]+"; path=/";
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-
-    // redirect to game
+      .then(response => response.json())
+      .then(data => {
+        // add cookie manually
+        document.cookie = "access_token=" + data["access_token"];
+        window.location.replace(window.location.origin + "/")
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   }
 
   return (
