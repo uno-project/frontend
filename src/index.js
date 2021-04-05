@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import {BrowserRouter as Router, Switch, Route,} from "react-router-dom";
 import * as serviceWorker from './serviceWorker';
+
+import './index.css';
+
 import Login from "./Login";
 import App from "./App";
-import {BrowserRouter as Router, Switch, Route,} from "react-router-dom";
+import Game from "./Game";
 
 export default function Home() {
   return (
@@ -17,6 +20,9 @@ export default function Home() {
           </Route>
           <Route path="/">
             <App />
+          </Route>
+          <Route path="/game">
+            <Game />
           </Route>
         </Switch>
     </Router>

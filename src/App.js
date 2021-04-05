@@ -4,6 +4,12 @@ import { Link } from 'react-router-dom';
 import { Button } from "react-bootstrap";
 
 class App extends Component {
+
+    constructor(props) {
+        super(props);
+        this.newGame = this.newGame.bind(this);
+    }
+
     getAccessToken() {
         try {
             const cookieValue = document.cookie
@@ -40,8 +46,10 @@ class App extends Component {
     }
 
     newGame() {
-        var access_token = this.getAccessToken()
-        debugger;
+        let access_token = this.getAccessToken()
+        let token = this.getToken(access_token)
+        console.debug(token)
+        let players = [token['identity']]
         fetch(process.env.REACT_APP_SERVER + 'game', {
             method: 'POST',
             mode: 'cors',
@@ -49,13 +57,15 @@ class App extends Component {
             credentials: 'same-origin',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + access_token
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${access_token}`
             },
-            body: JSON.stringify({ 'players': [this.getToken(access_token)['jti']] })
+            body: JSON.stringify({ 'players': players })
         })
             .then(response => response.json())
             .then(data => {
-                window.location.replace(window.location.origin + "/game")
+                console.log(data)
+                //window.location.replace(window.location.origin + "/game")
             })
             .catch((error) => {
                 console.error('Error:', error);
