@@ -1,5 +1,5 @@
 import jwt from "jwt-decode";
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "react-bootstrap";
 
@@ -49,7 +49,6 @@ class App extends Component {
         let access_token = this.getAccessToken()
         let token = this.getToken(access_token)
         console.debug(token)
-        let players = [token['identity']]
         fetch(process.env.REACT_APP_SERVER + 'game', {
             method: 'POST',
             mode: 'cors',
@@ -60,12 +59,11 @@ class App extends Component {
                 'Accept': 'application/json',
                 'Authorization': `Bearer ${access_token}`
             },
-            body: JSON.stringify({ 'players': players })
         })
             .then(response => response.json())
             .then(data => {
-                console.log(data)
-                //window.location.replace(window.location.origin + "/game")
+                let gameId = data.gameId
+                window.location.replace(`${window.location.origin}/game/${gameId}`)
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -74,10 +72,10 @@ class App extends Component {
 
     render() {
         return (
-            <div className="Home">
-                <h1>Home</h1>
+            <Fragment>
+            <h1>Home</h1>
                 {this.isLogged()}
-            </div>
+                </Fragment>
         );
     }
 }

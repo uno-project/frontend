@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import "./Login.css";
 
@@ -36,7 +36,7 @@ export default function Login() {
   }
 
   return (
-    <div className="Login">
+    <Fragment>
       <form onSubmit={handleSubmit}>
         <FormGroup controlId="username" bssize="large">
           <FormLabel>Username</FormLabel>
@@ -51,6 +51,6 @@ export default function Login() {
           Login
         </Button>
       </form>
-    </div>
+    </Fragment>
   );
 }

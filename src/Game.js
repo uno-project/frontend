@@ -1,12 +1,16 @@
-import React from "react";
+import React, { Component, Fragment } from 'react';
 
 
-function Game() {
+class Game extends Component {
+
+  render() {
   
   return (
-    <div className="Game">
-    </div>
+    <Fragment>
+    <h1>GAME PAGE</h1>
+    </Fragment>
   );
+}
 }
 
 export default Game;

@@ -18,10 +18,10 @@ export default function Home() {
           <Route path="/login">
             <Login />
           </Route>
-          <Route path="/">
+          <Route exact path="/">
             <App />
           </Route>
-          <Route path="/game">
+          <Route path="/game/:id">
             <Game />
           </Route>
         </Switch>
