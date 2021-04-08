@@ -4,6 +4,11 @@ import { withRouter } from 'react-router-dom';
 
 class Game extends Component {
 
+  constructor(props) {
+    super(props);
+    this.startGame = this.startGame.bind(this);
+}
+
   render() {
 
     return (

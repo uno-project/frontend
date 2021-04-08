@@ -1,8 +1,8 @@
-import jwt from "jwt-decode";
-import React, { Component, Fragment } from 'react';
+import { React, Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "react-bootstrap";
 import { withRouter } from 'react-router-dom';
+import { getAccessToken } from './utils';
 
 class App extends Component {
 
@@ -11,26 +11,8 @@ class App extends Component {
         this.newGame = this.newGame.bind(this);
     }
 
-    getAccessToken() {
-        try {
-            const cookieValue = document.cookie
-                .split('; ')
-                .find(row => row.startsWith('access_token='))
-                .split('=')[1];
-            return cookieValue
-        } catch {
-            return null
-        }
-    }
-
-    getToken(token) {
-        if (token != null)
-            return jwt(token)
-        return null
-    }
-
     isLogged() {
-        let token = this.getToken(this.getAccessToken())
+        let token = this.getToken(getAccessToken())
         if (token == null) {
             return (
                 <Link to="/login">Login</Link>
@@ -47,9 +29,7 @@ class App extends Component {
     }
 
     newGame() {
-        let access_token = this.getAccessToken()
-        let token = this.getToken(access_token)
-        console.debug(token)
+        let access_token = getAccessToken()
         fetch(process.env.REACT_APP_SERVER + 'game', {
             method: 'POST',
             mode: 'cors',
@@ -64,7 +44,7 @@ class App extends Component {
             .then(response => response.json())
             .then(data => {
                 let gameId = data.gameId
-                this.props.history.push(`/game/${gameId}`)
+                this.props.history.push(`/lobby/${gameId}`)
             })
             .catch((error) => {
                 console.error('Error:', error);

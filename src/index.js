@@ -8,19 +8,23 @@ import './index.css';
 import Login from "./Login";
 import App from "./App";
 import Game from "./Game";
+import GameLobby from './GameLobby';
 
 export default function Home() {
   return (
     <Router basename={process.env.PUBLIC_URL}>
       <Switch>
-        <Route path="/login">
-          <Login />
-        </Route>
         <Route exact path="/">
           <App />
         </Route>
+        <Route exact path="/login">
+          <Login />
+        </Route>
         <Route path="/game/:id">
           <Game />
+        </Route>
+        <Route path="/lobby/:id">
+          <GameLobby />
         </Route>
       </Switch>
     </Router>
