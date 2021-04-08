@@ -2,7 +2,7 @@ import jwt from "jwt-decode";
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "react-bootstrap";
-import {withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 class App extends Component {
 
@@ -74,9 +74,9 @@ class App extends Component {
     render() {
         return (
             <Fragment>
-            <h1>Home</h1>
+                <h1>Home</h1>
                 {this.isLogged()}
-                </Fragment>
+            </Fragment>
         );
     }
 }

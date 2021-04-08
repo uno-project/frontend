@@ -1,16 +1,14 @@
 import React, { Fragment, Component } from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import "./Login.css";
-import {withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 class Login extends Component {
 
   constructor(props) {
     super(props);
     this.props = props
-    this.state = {
-      username: "",
-    }
+    this.state = { username: "" }
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
