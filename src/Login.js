@@ -1,20 +1,29 @@
-import React, { useState, Fragment } from "react";
+import React, { Fragment, Component } from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import "./Login.css";
+import {withRouter} from 'react-router-dom';
 
-export default function Login() {
-  const [username, setEmail] = useState("");
+class Login extends Component {
 
-  function validateForm() {
-    return username.length > 0;
+  constructor(props) {
+    super(props);
+    this.props = props
+    this.state = {
+      username: "",
+    }
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    createAndLoginUser(username);
+  validateForm() {
+    return this.state.username.length > 0
   }
 
-  function createAndLoginUser(username) {
+  handleSubmit(event) {
+    event.preventDefault()
+    this.createAndLoginUser()
+  }
+
+  createAndLoginUser() {
     // create user on api
     fetch(process.env.REACT_APP_SERVER + 'player', {
       method: 'POST',
@@ -22,35 +31,39 @@ export default function Login() {
       cache: 'no-cache',
       credentials: 'same-origin',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 'name': username })
+      body: JSON.stringify({ 'name': this.state.username })
     })
       .then(response => response.json())
       .then(data => {
         // add cookie manually
         document.cookie = "access_token=" + data["access_token"];
-        window.location.replace(window.location.origin + "/")
+        this.props.history.push('/')
       })
       .catch((error) => {
         console.error('Error:', error);
       });
   }
 
-  return (
-    <Fragment>
-      <form onSubmit={handleSubmit}>
-        <FormGroup controlId="username" bssize="large">
-          <FormLabel>Username</FormLabel>
-          <FormControl
-            autoFocus
-            type="username"
-            value={username}
-            onChange={e => setEmail(e.target.value)}
-          />
-        </FormGroup>
-        <Button block bssize="large" disabled={!validateForm()} type="submit">
-          Login
+  render() {
+    return (
+      <Fragment>
+        <form onSubmit={this.handleSubmit}>
+          <FormGroup controlId="username" bssize="large">
+            <FormLabel>Username</FormLabel>
+            <FormControl
+              autoFocus
+              type="username"
+              value={this.state.username}
+              onChange={e => this.setState({ username: e.target.value })}
+            />
+          </FormGroup>
+          <Button block bssize="large" disabled={!this.validateForm()} type="submit">
+            Login
         </Button>
-      </form>
-    </Fragment>
-  );
+        </form>
+      </Fragment>
+    );
+  }
 }
+
+export default withRouter(Login);

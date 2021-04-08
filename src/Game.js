@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import {withRouter} from 'react-router-dom';
 
 
 class Game extends Component {
@@ -13,4 +14,4 @@ class Game extends Component {
 }
 }
 
-export default Game;
+export default withRouter(Game);

@@ -2,6 +2,7 @@ import jwt from "jwt-decode";
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "react-bootstrap";
+import {withRouter} from 'react-router-dom';
 
 class App extends Component {
 
@@ -63,7 +64,7 @@ class App extends Component {
             .then(response => response.json())
             .then(data => {
                 let gameId = data.gameId
-                window.location.replace(`${window.location.origin}/game/${gameId}`)
+                this.props.history.push(`/game/${gameId}`)
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -79,4 +80,4 @@ class App extends Component {
         );
     }
 }
-export default App;
+export default withRouter(App);
