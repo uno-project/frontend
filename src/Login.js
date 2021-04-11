@@ -1,6 +1,5 @@
 import React, { Fragment, Component } from "react";
-import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
-import "./Login.css";
+import { Button, Input, InputLabel } from './imports';
 import { withRouter } from 'react-router-dom';
 
 class Login extends Component {
@@ -45,20 +44,17 @@ class Login extends Component {
   render() {
     return (
       <Fragment>
-        <form onSubmit={this.handleSubmit}>
-          <FormGroup controlId="username" bssize="large">
-            <FormLabel>Username</FormLabel>
-            <FormControl
-              autoFocus
-              type="username"
-              value={this.state.username}
-              onChange={e => this.setState({ username: e.target.value })}
-            />
-          </FormGroup>
-          <Button block bssize="large" disabled={!this.validateForm()} type="submit">
-            Login
+        <InputLabel htmlFor="component-helper">Username</InputLabel>
+        <Input
+          id="username"
+          aria-describedby="component-helper-text"
+          autoFocus
+          type="username"
+          onChange={e => this.setState({ username: e.target.value })}
+        />
+        <Button block bssize="large" disabled={!this.validateForm()} onClick={this.handleSubmit}>
+          Login
         </Button>
-        </form>
       </Fragment>
     );
   }

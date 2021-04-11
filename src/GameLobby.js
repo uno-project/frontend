@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Button } from "react-bootstrap";
+import { getAccessToken } from './utils';
+import { Button } from './imports';
 
 
 class GameLobby extends Component {
@@ -8,13 +9,39 @@ class GameLobby extends Component {
   constructor(props) {
     super(props);
     this.startGame = this.startGame.bind(this);
+    this.newGame = this.newGame.bind(this);
     this.gameId = window.location.pathname.split("/")[3]
-}
+  }
 
+  componentDidMount() {
+    debugger
+    this.newGame()
+  }
 
   // get players from api
-  getPlayers()
-
+  //getPlayers()
+  newGame() {
+    let access_token = getAccessToken()
+    fetch(process.env.REACT_APP_SERVER + 'game', {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${access_token}`
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        let gameId = data.gameId
+        this.props.history.push(`/lobby/${gameId}`)
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }
 
   startGame(event) {
     // create user on api
