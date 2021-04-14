@@ -35,6 +35,7 @@ class Login extends Component {
         // add cookie manually
         document.cookie = "access_token=" + data["access_token"];
         this.props.history.push('/')
+        this.props.history.go()
       })
       .catch((error) => {
         console.error('Error:', error);

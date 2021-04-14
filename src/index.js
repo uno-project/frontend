@@ -66,12 +66,8 @@ function isLogged(classes) {
 export default function Home() {
   const classes = useStyles()
   // eslint-disable-next-line 
-  const [token, setToken] = useState(null);
+  const token = isLogged(classes)
 
-  // Similar to componentDidMount and componentDidUpdate:
-  useEffect(() => {
-    setToken(isLogged(classes))
-  });
 
   return (
     <Fragment >
