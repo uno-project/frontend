@@ -10,16 +10,47 @@ class GameLobby extends Component {
     super(props);
     this.startGame = this.startGame.bind(this);
     this.newGame = this.newGame.bind(this);
-    this.gameId = window.location.pathname.split("/")[3]
+    try {
+      this.gameId = window.location.pathname.split("/")[3]
+    } catch (error) {
+      this.gameId = null
+    }
+
   }
 
   componentDidMount() {
-    debugger
-    this.newGame()
+    if (this.gameId == null)
+      this.newGame()
   }
 
-  // get players from api
-  //getPlayers()
+  requiredPlayers() {
+    try {
+      if (this.getPlayers().length >= 2)
+        return true
+    } catch (error) {
+      ;
+    }
+    return false
+  }
+
+  getPlayers() {    // create user on api
+    fetch(`${process.env.REACT_APP_SERVER}/game/${this.gameId}`, {
+      method: 'GET',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then(response => response.json())
+      .then(data => {
+        return data.players
+      }
+      )
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }
+
   newGame() {
     let access_token = getAccessToken()
     fetch(process.env.REACT_APP_SERVER + 'game', {

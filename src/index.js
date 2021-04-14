@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route, } from "react-router-dom";
 import * as serviceWorker from './serviceWorker';
-import { React, Fragment, useState, useEffect } from 'react';
+import { React, Fragment} from 'react';
 import { AppBar, Button, CssBaseline, Grid, Toolbar, Typography, Link, Container, makeStyles, Box } from './imports';
 import { getToken, getAccessToken } from './utils';
 
