@@ -7,6 +7,7 @@ class Game extends Component {
   constructor(props) {
     super(props);
     this.startGame = this.startGame.bind(this);
+    this.gameId = props.match.params.id
 }
 
   render() {

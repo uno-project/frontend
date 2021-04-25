@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Switch, Route, } from "react-router-dom";
+import { HashRouter as Router, Switch, Route} from "react-router-dom";
 import * as serviceWorker from './serviceWorker';
 import { React, Fragment} from 'react';
 import { AppBar, Button, CssBaseline, Grid, Toolbar, Typography, Link, Container, makeStyles, Box } from './imports';
@@ -59,7 +59,7 @@ function isLogged(classes) {
   let token = getToken(getAccessToken())
 
   if (token === null)
-    return <Button href={`${process.env.PUBLIC_URL}/login`} color="primary" variant="outlined" className={classes.link}>Login</Button>
+    return <Button href={`${process.env.PUBLIC_URL}/#/login`} color="primary" variant="outlined" className={classes.link}>Login</Button>
   return <Button disabled color="primary" variant="outlined" className={classes.link}>Logged as </Button>
 }
 
@@ -76,7 +76,7 @@ export default function Home() {
         <Toolbar className={classes.toolbar}>
           <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>Uno Project</Typography>
           <nav>
-            <Link variant="button" color="textPrimary" href={`${process.env.PUBLIC_URL}/lobby/`} className={classes.link}>New Game</Link>
+            <Link variant="button" color="textPrimary" href={`${process.env.PUBLIC_URL}/#/lobby`} className={classes.link}>New Game</Link>
           </nav>
           {token}
         </Toolbar>
@@ -97,10 +97,10 @@ export default function Home() {
             <Route path="/game/:id">
               <Game />
             </Route>
-            <Route path="/lobby/">
+            <Route path="/lobby/:id">
               <GameLobby />
             </Route>
-            <Route path="/lobby/:id">
+            <Route path="/lobby/">
               <GameLobby />
             </Route>
           </Switch>

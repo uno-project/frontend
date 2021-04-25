@@ -10,17 +10,23 @@ class GameLobby extends Component {
     super(props);
     this.startGame = this.startGame.bind(this);
     this.newGame = this.newGame.bind(this);
-    try {
-      this.gameId = window.location.pathname.split("/")[3]
-    } catch (error) {
-      this.gameId = null
-    }
-
+    this.gameId = props.match.params.id
   }
 
   componentDidMount() {
     if (this.gameId == null)
       this.newGame()
+    this.listenEvents()
+  }
+
+  async listenEvents() {
+    var evtSource = new EventSource(`${process.env.REACT_APP_SERVER}lobby/${this.gameId}`, {  headers: {
+      'Authorization': `Bearer ${getAccessToken()}`
+    }, withCredentials: true});
+    evtSource.onmessage = function (e) {
+      debugger
+      console.log(e.data)
+    }
   }
 
   requiredPlayers() {
@@ -34,12 +40,15 @@ class GameLobby extends Component {
   }
 
   getPlayers() {    // create user on api
-    fetch(`${process.env.REACT_APP_SERVER}/game/${this.gameId}`, {
+    fetch(`${process.env.REACT_APP_SERVER}game/${this.gameId}`, {
       method: 'GET',
       mode: 'cors',
       cache: 'no-cache',
       credentials: 'same-origin',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${getAccessToken()}`
+      },
     })
       .then(response => response.json())
       .then(data => {
@@ -52,8 +61,8 @@ class GameLobby extends Component {
   }
 
   newGame() {
-    let access_token = getAccessToken()
-    fetch(process.env.REACT_APP_SERVER + 'game', {
+    debugger
+      fetch(process.env.REACT_APP_SERVER + 'game', {
       method: 'POST',
       mode: 'cors',
       cache: 'no-cache',
@@ -61,7 +70,7 @@ class GameLobby extends Component {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': `Bearer ${access_token}`
+        'Authorization': `Bearer ${getAccessToken()}`
       },
     })
       .then(response => response.json())
@@ -76,13 +85,13 @@ class GameLobby extends Component {
 
   startGame(event) {
     // create user on api
-    fetch(process.env.REACT_APP_SERVER + 'game', {
+    fetch(`${process.env.REACT_APP_SERVER}lobby/${this.gameId}`, {
       method: 'PATCH',
       mode: 'cors',
       cache: 'no-cache',
       credentials: 'same-origin',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 'players': [this.state.username] })
+      headers: { 'Content-Type': 'application/json', 
+      'Authorization': `Bearer ${getAccessToken()}` },
     })
       .then(response => response.json())
       .then(this.props.history.push(`/game/${this.gameId}`))
