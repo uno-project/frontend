@@ -86,7 +86,7 @@ export default function Home() {
       </Container>
       /* End hero unit */}
       <Container maxWidth="md" component="main">
-        <Router basename={process.env.PUBLIC_URL}>
+        <Router>
           <Switch>
             <Route exact path="/">
               <App />

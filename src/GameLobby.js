@@ -14,17 +14,16 @@ class GameLobby extends Component {
   }
 
   componentDidMount() {
-    if (this.gameId == null)
-      this.newGame()
-    this.listenEvents()
+    if (this.gameId != null) {
+      this.listenEvents()
+      return 
+    }
+    this.newGame()
   }
 
-  async listenEvents() {
-    var evtSource = new EventSource(`${process.env.REACT_APP_SERVER}lobby/${this.gameId}`, {  headers: {
-      'Authorization': `Bearer ${getAccessToken()}`
-    }, withCredentials: true});
+  listenEvents() {
+    var evtSource = new EventSource(`${process.env.REACT_APP_SERVER}lobby/${this.gameId}`)
     evtSource.onmessage = function (e) {
-      debugger
       console.log(e.data)
     }
   }
@@ -39,7 +38,7 @@ class GameLobby extends Component {
     return false
   }
 
-  getPlayers() {    // create user on api
+  getPlayers() {
     fetch(`${process.env.REACT_APP_SERVER}game/${this.gameId}`, {
       method: 'GET',
       mode: 'cors',
@@ -61,8 +60,7 @@ class GameLobby extends Component {
   }
 
   newGame() {
-    debugger
-      fetch(process.env.REACT_APP_SERVER + 'game', {
+    fetch(process.env.REACT_APP_SERVER + 'game', {
       method: 'POST',
       mode: 'cors',
       cache: 'no-cache',
@@ -90,8 +88,10 @@ class GameLobby extends Component {
       mode: 'cors',
       cache: 'no-cache',
       credentials: 'same-origin',
-      headers: { 'Content-Type': 'application/json', 
-      'Authorization': `Bearer ${getAccessToken()}` },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${getAccessToken()}`
+      },
     })
       .then(response => response.json())
       .then(this.props.history.push(`/game/${this.gameId}`))
