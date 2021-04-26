@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://uno-project.github.io/frontend",
+  "homepage": "https://uno.ramonmedeiros.dev/",
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "jwt-decode": "^3.1.2",
