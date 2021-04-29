@@ -1,0 +1,26 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: react
+    versions:
+    - 17.0.2
+  - dependency-name: react-native-login-screen
+    versions:
+    - 2.1.4
+  - dependency-name: universal-cookie
+    versions:
+    - 4.0.4
+  - dependency-name: "@testing-library/react"
+    versions:
+    - 11.2.6
+  - dependency-name: "@testing-library/jest-dom"
+    versions:
+    - 5.11.10
+  - dependency-name: "@testing-library/user-event"
+    versions:
+    - 13.1.1
