@@ -108,7 +108,7 @@ export default function Home() {
       </Container>
       {/* Footer */}
       <Container maxWidth="md" component="footer" className={classes.footer}>
-        <Grid container justify="space-evenly">
+        <Grid container justify-content="space-evenly">
           <Grid item key="title">
             <Typography variant="h6" color="textPrimary" gutterBottom>
             </Typography>

@@ -22,9 +22,8 @@ class Login extends Component {
 
   createAndLoginUser() {
     // create user on api
-    fetch(process.env.REACT_APP_SERVER + 'player', {
+    fetch(process.env.REACT_APP_SERVER + '/player', {
       method: 'POST',
-      mode: 'cors',
       cache: 'no-cache',
       credentials: 'same-origin',
       headers: { 'Content-Type': 'application/json' },
@@ -45,17 +44,19 @@ class Login extends Component {
   render() {
     return (
       <Fragment>
-        <InputLabel htmlFor="component-helper">Username</InputLabel>
-        <Input
-          id="username"
-          aria-describedby="component-helper-text"
-          autoFocus
-          type="username"
-          onChange={e => this.setState({ username: e.target.value })}
-        />
-        <Button block bssize="large" disabled={!this.validateForm()} onClick={this.handleSubmit}>
-          Login
-        </Button>
+        <div style={{padding: "20px"}}>
+          <InputLabel htmlFor="component-helper">Username</InputLabel>
+          <Input
+            id="username"
+            aria-describedby="component-helper-text"
+            autoFocus
+            type="username"
+            onChange={e => this.setState({ username: e.target.value })}
+          />
+          <Button bssize="large" disabled={!this.validateForm()} onClick={this.handleSubmit} variant="contained" color="default">
+            Login
+          </Button>
+          </div>
       </Fragment>
     );
   }
